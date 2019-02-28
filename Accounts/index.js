@@ -1,7 +1,7 @@
 // Setup mariadb for accounts.
 const mariadb = require('mariadb');
 const pool = mariadb.createPool({
-    host: '127.0.0.1',
+    host: '192.168.99.100',
     port: '3310',
     user: 'root', 
     password: 'AccountPSWD', // change this as production.
@@ -11,7 +11,7 @@ const pool = mariadb.createPool({
 
 async function register(username, password) {
     // defensive code
-    if ((typeof (username) != String) || (typeof (password) != String)) {
+    if ((typeof (username) !== "string") || (typeof (password) !== "string")) {
         return "username or password is not string";
     }
     let conn;
@@ -30,7 +30,7 @@ async function register(username, password) {
 
 }
 function login(username, password) {
-    if ((typeof (username) != String) || (typeof (password) != String)) {
+    if ((typeof (username) !== "string") || (typeof (password) !== "string")) {
         return "username or password is not string";
     }
 
@@ -39,9 +39,6 @@ function login(username, password) {
 }
 
 function makeQuery(queries) {
-    if (typeof(queries) != Array){
-        throw err;
-    }
 
 
 }
@@ -75,5 +72,6 @@ async function initializeDatabase() {
     }
 }
 
-// initializeDatabase();
-register("MyUserName", "MyPassWord");
+// Both of these are working :)
+//initializeDatabase();
+//register("MyUserName", "MyPassWord");
