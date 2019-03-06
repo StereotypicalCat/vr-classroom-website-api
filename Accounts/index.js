@@ -1,36 +1,64 @@
 // Setup mariadb for accounts.
 const mariadb = require('mariadb');
+
+
+// =========== Hashing ===============
+
+// Hashing algorithm:
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+
+
+
 const pool = mariadb.createPool({
-    // host: '192.168.99.100',
-    host: "127.0.0.1",
+    host: '192.168.99.100',
+    // host: "127.0.0.1",
     port: '3310',
-    user: 'root', 
+    user: 'root',
     password: 'AccountPSWD', // change this as production.
     database: 'users',
     connectionLimit: 8
 });
 
 async function register(username, password) {
-    // defensive code
     if ((typeof (username) !== "string") || (typeof (password) !== "string")) {
         return "username or password is not string";
     }
     let conn;
     try {
         conn = await pool.getConnection();
-        console.log("1");
-        const res = await conn.query("INSERT INTO `users`.`users` (`username`, `password`, `nickname`, `email`, `reg_date`, `Courses`) VALUES (?,?,?,?, DEFAULT, '');", [username, password, "RossBob", "RossBob@hellothere.com"]);
-        console.log("2");        
-        console.log(res); // 
+
+        let usernameTakenTest = await conn.query(`SELECT username FROM users.users WHERE username = "${username}";`);
+
+        if (usernameTakenTest.length !== 0){
+            console.log("Username is already taken");
+            return;
+        }
+
+
+        var hashedPassword = bcrypt.hashSync(password, saltRounds);
+
+
+        console.log("H Password is: " + hashedPassword);
+
+        await conn.query("INSERT INTO `users`.`users` (`username`, `password`, `nickname`, `email`, `reg_date`, `Courses`) VALUES (?,?,?,?, DEFAULT, '');", [username, hashedPassword, "RossBob", "RossBob@hellothere.com"]);
     } catch (err) {
         throw err;
     } finally {
-        if (conn) return conn.end();
+        if (conn) {
+            conn.end();
+        }
+
     }
 
 
 }
+
 async function login(username, password) {
+
+    var returnMessage = "Failed";
+
     if ((typeof (username) !== "string") || (typeof (password) !== "string")) {
         return "username or password is not string";
     }
@@ -39,24 +67,35 @@ async function login(username, password) {
     try {
         conn = await pool.getConnection();
         // console.log("1");
-        res = await conn.query(`SELECT username, password FROM users.users WHERE username = "TestUser1";`);
-        // console.log("2");
-        // console.log(res); //
+        res = await conn.query(`SELECT username FROM users.users WHERE username = "${username}";`);
+
+        if (res.length === 1) {
+            var correctPassword = bcrypt.compareSync(password, res[0]["password"]);
+
+            if (correctPassword){
+                returnMessage = "Login Successful";
+            }
+            else{
+                returnMessage = "Password not correct";
+            }
+
+        }
+        else{
+            returnMessage = "Username not found";
+        }
+
+
+
     } catch (err) {
         throw err;
     } finally {
-        if (conn) return conn.end();
+        if (conn) {
+            conn.end();
+        }
     }
-    console.log("--------------------");
-    console.log(res);
-}
-
-function makeQuery(queries) {
-
+    return returnMessage;
 
 }
-
-
 
 
 async function initializeDatabase() {
@@ -68,7 +107,7 @@ async function initializeDatabase() {
         const rows = await conn.query(`CREATE TABLE users ( 
             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
             username VARCHAR(18) NOT NULL, 
-            password VARCHAR(26) NOT NULL,
+            password VARCHAR(100) NOT NULL,
             nickname VARCHAR(18) NOT NULL,
             email VARCHAR(60), 
             reg_date TIMESTAMP,
@@ -81,11 +120,22 @@ async function initializeDatabase() {
     } catch (err) {
         throw err;
     } finally {
-        if (conn) return conn.end();
+        if (conn) conn.end();
     }
 }
 
 // Both of these are working :)
-//initializeDatabase();
-register("TestUser2", "TestPassword2");
-login("TestUser2", "TestPassword2");
+/*initializeDatabase();*/
+/*register("lucasw", "winther");*/
+/*
+var promise1 = Promise.resolve(login("lucas", "winther"));
+
+promise1.then(function(value){
+        console.log(value);
+    }
+);
+*/
+
+
+
+
