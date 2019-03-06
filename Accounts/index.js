@@ -1,3 +1,8 @@
+// Communication
+var express = require('express');
+var app = express();
+
+
 // Setup mariadb for accounts.
 const mariadb = require('mariadb');
 
@@ -126,7 +131,7 @@ async function initializeDatabase() {
 
 // Both of these are working :)
 /*initializeDatabase();*/
-/*register("lucasw", "winther");*/
+/*register("lasse", "ES");*/
 /*
 var promise1 = Promise.resolve(login("lucas", "winther"));
 
@@ -135,6 +140,20 @@ promise1.then(function(value){
     }
 );
 */
+
+app.post('/api/login', function (req, res){
+    let promise1 = login(req.body);
+    promise1.then(function(value){
+            res.send(value);
+        }
+    )
+});
+
+var server = app.listen(3008, function (){
+    console.log('server running at http://127.0.0.1:3008')
+});
+
+
 
 
 
