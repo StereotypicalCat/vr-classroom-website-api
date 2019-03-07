@@ -2,6 +2,10 @@
 var express = require('express');
 var app = express();
 
+// Parsing
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
+
 
 // Setup mariadb for accounts.
 const mariadb = require('mariadb');
@@ -28,6 +32,8 @@ const pool = mariadb.createPool({
 
 async function register(username, password) {
     if ((typeof (username) !== "string") || (typeof (password) !== "string")) {
+        console.log("USERNAME: " + username);
+        console.log("PASSWORD: " + password);
         return "username or password is not string";
     }
     let conn;
@@ -65,6 +71,8 @@ async function login(username, password) {
     var returnMessage = "Failed";
 
     if ((typeof (username) !== "string") || (typeof (password) !== "string")) {
+        console.log("USERNAME: " + username);
+        console.log("PASSWORD: " + password);
         return "username or password is not string";
     }
     let conn;
@@ -72,7 +80,7 @@ async function login(username, password) {
     try {
         conn = await pool.getConnection();
         // console.log("1");
-        res = await conn.query(`SELECT username FROM users.users WHERE username = "${username}";`);
+        res = await conn.query(`SELECT username, password FROM users.users WHERE username = "${username}";`);
 
         if (res.length === 1) {
             var correctPassword = bcrypt.compareSync(password, res[0]["password"]);
@@ -141,8 +149,10 @@ promise1.then(function(value){
 );
 */
 
-app.post('/api/login', function (req, res){
-    let promise1 = login(req.body);
+app.post('/api/login', jsonParser, function (req, res){
+    console.log("REQUEST BODY: " + req.body);
+
+    let promise1 = login(req.body.username, req.body.password);
     promise1.then(function(value){
             res.send(value);
         }
