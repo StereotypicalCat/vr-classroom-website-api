@@ -140,20 +140,22 @@ async function initializeDatabase() {
 // Both of these are working :)
 /*initializeDatabase();*/
 /*register("lasse", "ES");*/
-/*
-var promise1 = Promise.resolve(login("lucas", "winther"));
 
-promise1.then(function(value){
-        console.log(value);
-    }
-);
-*/
 
 app.post('/api/login', jsonParser, function (req, res){
     console.log("REQUEST BODY: " + req.body);
 
     let promise1 = login(req.body.username, req.body.password);
     promise1.then(function(value){
+            res.send(value);
+        }
+    )
+});
+
+app.post('/api/register', jsonParser, function (req, res){
+    console.log("REQUEST BODY: " + req.body);
+
+    register(req.body.username, req.body.password).then(function(value){
             res.send(value);
         }
     )

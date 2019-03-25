@@ -5,19 +5,12 @@ const request = require('request');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
-module.exports = function(app){
-
-
-    app.post('/api/login', jsonParser, function (req, res){
-
-        let apiAnswer;
-
-    if (req.body.username && req.body.password) {
-
+const login = (username, password) => {
+    return new Promise((resolve, reject) => {
         request.post(url = 'http://127.0.0.1:3008/api/login', {
-            json:{
-                "username":req.body.username,
-                "password":req.body.password
+            json: {
+                "username": username,
+                "password": password
             }
 
         }, (error, res, body) => {
@@ -27,16 +20,64 @@ module.exports = function(app){
             }
             console.log(`statusCode: ${res.statusCode}`);
             console.log(body);
-            apiAnswer = body;
+            if (body != null) {
+                resolve(body);
+            } else {
+                reject(Error("It broke"));
+            }
+
+
+        });
+    })
+};
+
+const register = (username, password) => {
+    return new Promise((resolve, reject) => {
+        request.post(url = 'http://127.0.0.1:3008/api/register', {
+            json: {
+                "username": username,
+                "password": password
+            }
+
+        }, (error, res, body) => {
+            if (error) {
+                console.error(error);
+                return
+            }
+            console.log(`statusCode: ${res.statusCode}`);
+            console.log(body);
+            if (body != null) {
+                resolve(body);
+            } else {
+                reject(Error("It broke"));
+            }
         })
-    }
+    })
+};
 
 
-        res.send(apiAnswer);
+module.exports = function (app) {
 
-    }
-    )
 
+    app.post('/api/login', jsonParser, function (req, res) {
+
+            if (req.body.username && req.body.password) {
+                login(req.body.username, req.body.password).then(answer => (
+                    res.send(answer))
+                )
+            }
+        }
+    );
+
+    app.post('/api/register', jsonParser, function (req, res) {
+
+            if (req.body.username && req.body.password) {
+                register(req.body.username, req.body.password).then(answer => (
+                    res.send(answer))
+                )
+            }
+        }
+    );
 
 
 
