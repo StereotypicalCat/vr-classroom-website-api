@@ -1,17 +1,19 @@
 {
-  "name": "accounts",
+  "name": "true-vr-classroom",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "mariadb": "^2.0.3"
+    "mariadb": "^2.0.3",
+    "bcrypt": "^3.0.5"
   }
 }
