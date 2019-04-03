@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const db = mariadb.createPool({
-    //host: '192.168.99.100',
-    host: "127.0.0.1",
+    host: '84.238.80.9',
+    //host: "127.0.0.1",
     port: '3310',
     user: 'root',
     password: 'AccountPSWD', // change this as production.
@@ -19,7 +19,7 @@ const loginRouter = require('./routes/loginRouter')(db);
 async function initializeDatabase() {
     let conn;
     try {
-        conn = await pool.getConnection();
+        conn = await db.getConnection();
         const rows = await conn.query(`CREATE TABLE users ( 
             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
             username VARCHAR(18) NOT NULL, 
@@ -44,6 +44,11 @@ initializeDatabase();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(function(req, res, next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.use('/login', loginRouter);
 
