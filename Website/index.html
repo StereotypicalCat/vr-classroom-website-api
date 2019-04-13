@@ -41,25 +41,25 @@
                     <div class="form-block w-form">
                         <form id="email-form" name="email-form" data-name="Email Form" class="w-clearfix">
                             <label
-                                for="name">Email addresse</label>
-                            <input type="email" class="w-input" maxlength="256"
-                                                                        name="field" data-name="Field"
-                                                                        placeholder="søren@gmail.com" id="login-0"
-                                                                        required="">
+                                    for="name">Brugernavn</label>
+                            <input type="text" class="w-input" maxlength="256"
+                                   name="field" data-name="Field"
+                                   placeholder="superstudent123" id="login-0"
+                                   required="">
                             <label for="name">Kodeord</label>
                             <input type="password" class="text-field w-input"
-                                                                 maxlength="256" name="field-2" data-name="Field 2"
-                                                                 placeholder="Indtast dit kodeord her" id="login-1"
-                                                                 required="">
+                                   maxlength="256" name="field-2" data-name="Field 2"
+                                   placeholder="Indtast dit kodeord her" id="login-1"
+                                   required="">
 
                             <input type="submit" value="Log ind"
-                                                                                    data-wait="Please wait..."
-                                                                                    class="submit-button-2 w-button">
+                                   data-wait="Please wait..."
+                                   class="submit-button-2 w-button" onclick="loginUser()">
                         </form>
-                        <div class="w-form-done">
-                            <div>Thank you! Your submission has been received!</div>
+                        <div class="w-form-done" id="w-form-done-login">
+                            <div>Thank you! You have been registered.</div>
                         </div>
-                        <div class="w-form-fail">
+                        <div class="w-form-fail" id="w-form-fail-login">
                             <div>Oops! Something went wrong while submitting the form.</div>
                         </div>
                     </div>
@@ -72,26 +72,27 @@
                     <div class="form-block w-form">
                         <form id="register-form" name="email-form" data-name="Email Form" class="w-clearfix">
                             <label
-                                for="field-4">Brugernavn</label>
+                                    for="field-4">Brugernavn</label>
                             <input type="text" class="w-input" maxlength="256" name="field-4" data-name="Field 4"
                                    placeholder="superstudent123" id="field-4" required="">
                             <label for="field-3">Email addresse</label>
                             <input type="email" class="w-input" maxlength="256"
-                                                                           name="field-3" data-name="Field 3"
-                                                                           placeholder="søren@gmail.com" id="field-3"
-                                                                           required="">
+                                   name="field-3" data-name="Field 3"
+                                   placeholder="søren@gmail.com" id="field-3"
+                                   required="">
                             <label for="field-1">Kodeord</label>
                             <input
                                     type="password" class="text-field w-input" maxlength="256" name="field-1"
                                     data-name="Field 1" placeholder="Indtast dit kodeord her" id="field-1"
-                                    required=""><input type="submit" value="Opret" data-wait="Please wait..."
-                                                       class="submit-button w-button">
+                                    required="">
+                            <input type="submit" value="Opret" data-wait="Please wait..."
+                                   class="submit-button w-button" onclick="registerUser()">
                         </form>
-                        <div class="w-form-done">
+                        <div class="w-form-done" id="w-form-done-register">
                             <div>Thank you! Your submission has been received!</div>
                         </div>
-                        <div class="w-form-fail">
-                            <div>Oops! Something went wrong while submitting the form.</div>
+                        <div id="w-form-fail-register">
+                            <div>Trying to send your request...</div>
                         </div>
                     </div>
                 </div>

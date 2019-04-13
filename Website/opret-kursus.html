@@ -41,19 +41,19 @@
         <div class="w-col w-col-10">
           <div data-duration-in="300" data-duration-out="100" class="tabs opret-kursus w-tabs">
             <div class="w-tab-menu">
-              <a data-w-tab="Tab 1" class="tab-opret w-inline-block w-tab-link w--current">
+              <a data-w-tab="Tab 1" id="title" class="tab-opret w-inline-block w-tab-link w--current">
                 <div class="text-block-2">1. Titel</div>
               </a>
-              <a data-w-tab="Tab 3" class="tab-opret w-inline-block w-tab-link">
+              <a data-w-tab="Tab 3" id="type" class="tab-opret w-inline-block w-tab-link">
                 <div>2. type</div>
               </a>
-              <a data-w-tab="Tab 2" class="tab-opret w-inline-block w-tab-link">
+              <a data-w-tab="Tab 2" id="description" class="tab-opret w-inline-block w-tab-link">
                 <div>3. Beskriv</div>
               </a>
-              <a data-w-tab="Tab 4" class="tab-opret w-inline-block w-tab-link">
-                <div>4. Pris</div>
+              <a data-w-tab="Tab 4" id="price" class="tab-opret w-inline-block w-tab-link">
+                  <div>4. Pris</div>
               </a>
-              <a data-w-tab="Tab 5" class="tab-opret w-inline-block w-tab-link">
+              <a data-w-tab="Tab 5" id="create" class="tab-opret w-inline-block w-tab-link">
                 <div>5. Opret</div>
               </a>
             </div>
@@ -61,9 +61,12 @@
               <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
                 <div class="div-block-6">
                   <h1 class="forside-overskrift">1. Opret dit kursus</h1>
-                  <p class="forside-tekst">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+                  <p class="forside-tekst">Her skal du give dit kursus et navn</p>
                   <div class="form-block w-form">
-                    <form id="email-form" name="email-form" data-name="Email Form" class="w-clearfix"><label for="name" class="forside-tekst">Navn på kursus</label><input type="email" class="text-field-2 w-input" maxlength="256" name="field" data-name="Field" placeholder="søren@gmail.com" id="field" required=""><input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button"></form>
+                    <form id="getCourseName" name="email-form" data-name="Email Form" class="w-clearfix">
+                        <label for="courseName" class="forside-tekst">Navn på kursus</label>
+                        <input type="text" class="text-field-2 w-input" maxlength="256" name="field" data-name="Field" placeholder="Mit seje kursus" id="courseName" required>
+                        <input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getCourseName()"></form>
                     <div class="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
                     </div>
@@ -78,7 +81,14 @@
                   <h1 class="forside-overskrift">2. Type</h1>
                   <p class="forside-tekst">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
                   <div class="form-block w-form">
-                    <form id="email-form" name="email-form" data-name="Email Form" class="w-clearfix"><label for="name" class="forside-tekst">Lektion</label><select id="field-9" name="field-9" required="" class="w-select"><option value="">Kemi</option><option value="First">Fysik</option><option value="Second">Matematik</option><option value="Third">Geografi</option></select><input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button"></form>
+                    <form name="email-form" data-name="Email Form" class="w-clearfix">
+                        <label for="name" class="forside-tekst">Lektion</label>
+                        <select id="courseType" name="field-9" required="" class="w-select">
+                            <option value="First">Kemi</option>
+                            <option value="Second">Fysik</option>
+                            <option value="Third">Matematik</option>
+                            <option value="Fourth">Geografi</option>
+                        </select><input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getCourseType()"></form>
                     <div class="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
                     </div>
@@ -92,7 +102,10 @@
                 <div class="div-block-6">
                   <h1 class="forside-overskrift">3. Beskriv dit kursus</h1>
                   <div class="form-block w-form">
-                    <form id="email-form" name="email-form" data-name="Email Form" class="w-clearfix"><label for="name" class="forside-tekst">Beskrivelse</label><textarea id="field-7" name="field-7" placeholder="Hvad handler kurset om?" maxlength="5000" class="textarea w-input"></textarea><input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button"></form>
+                    <form id="getcourseDescription" name="email-form" data-name="Email Form" class="w-clearfix">
+                        <label for="name" class="forside-tekst">Beskrivelse</label>
+                        <textarea id="CourseDescription" name="field-7" placeholder="Hvad handler kurset om?" maxlength="5000" class="textarea w-input"></textarea>
+                        <input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getCourseDescription()"></form>
                     <div class="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
                     </div>
@@ -170,12 +183,16 @@
               <div data-w-tab="Tab 5" class="w-tab-pane">
                 <div class="div-block-6">
                   <h1 class="forside-overskrift">5. Opret dit kursus</h1>
-                  <p class="forside-tekst">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+                  <p class="forside-tekst">Her kan du se dine valgte indstillinger</p>
                   <div class="form-block w-form">
-                    <form id="email-form" name="email-form" data-name="Email Form" class="w-clearfix"><label for="name" class="forside-tekst">Navn på kursus</label>
-                      <div class="forside-tekst">This is some text inside of a div block.</div><label for="name" class="forside-tekst">Navn på kursus</label>
-                      <div class="forside-tekst">This is some text inside of a div block.</div><label for="name" class="forside-tekst">Navn på kursus</label>
-                      <div class="forside-tekst">This is some text inside of a div block.</div><input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button"></form>
+                    <form id="email-form" name="email-form" data-name="Email Form" class="w-clearfix">
+                        <label for="name" class="forside-tekst">Navn på kursus</label>
+                      <div class="forside-tekst" id="courseNameShow">This is some text inside of a div block.</div>
+                        <label for="name" class="forside-tekst">Kursus type</label>
+                      <div class="forside-tekst" id="courseTypeShow">This is some text inside of a div block.</div>
+                        <label for="name" class="forside-tekst">Beskrivelse af Kursus</label>
+                      <div class="forside-tekst" id="courseDescriptionShow">This is some text inside of a div block.</div>
+                        <input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button"></form>
                     <div class="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
                     </div>
@@ -192,6 +209,7 @@
       </div>
     </div>
   </div>
+  <script src="js/Main.js" type="text/javascript"></script>
   <script src="https://d1tdp7z6w94jbb.cloudfront.net/js/jquery-3.3.1.min.js" type="text/javascript" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
