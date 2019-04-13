@@ -6,6 +6,11 @@ const request = require('request');
 const Player = require ("./Player");
 const gameObject = require("./gameObject") ;
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 var players = [];
 var objects = [];
 
@@ -82,7 +87,7 @@ server.on('message',function(msg,info){
         // Temporary code, this should login using the api, and get the players ID. This just assigns a random unique ID.
         getUserId(username,password).then((newID) => {
             console.log("new id: " + newID);
-            players.push(new Player(newID));
+            players.push(new Player(newID, username));
             server.send(newID.toString(),info.port,info.address,function(error){
                 if(error){
                     server.close();
@@ -91,10 +96,6 @@ server.on('message',function(msg,info){
 
             });
         });
-
-
-
-
     }
 
     if(stringReceivedFromClient.substring(0,6) === "logoff"){
@@ -133,6 +134,8 @@ server.on('message',function(msg,info){
         //sending Id back to client
         returnData = newID.toString();
 
+        stringReceivedFromClient = stringReceivedFromClient.replaceAll(',','.');
+
         //finds the right data for the new object
         let stringSplit = stringReceivedFromClient.split('|');
         let posx = stringSplit[2].split(':')[1];
@@ -140,7 +143,7 @@ server.on('message',function(msg,info){
         let posz = stringSplit[4].split(':')[1];
         
         //Adder new object to objects
-        objects.push(new gameObject(newID,stringSplit[1],posx,posy,posz));
+        objects.push(new gameObject(newID,stringSplit[1],parseFloat(posx),parseFloat(posy),parseFloat(posz)));
     }
 
     // If the client requests to download new information
@@ -230,7 +233,9 @@ server.on('message',function(msg,info){
                         // Each item is a key value pair
                         let [key, value] = item;
 
-//                        value = value.replace(",", ".");
+                        if(value == undefined){ continue }
+                        value = value.replace(",", ".");
+
                         switch (key) {
 
                             case "x":

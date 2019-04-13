@@ -14,4 +14,4 @@ class gameObject {
         this.s2 = "";
     }
 }
-module.exports = {gameObject};
+module.exports = gameObject;

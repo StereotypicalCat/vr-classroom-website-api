@@ -1,10 +1,10 @@
 class Player {
-    constructor(id){
+    constructor(id, name){
         this.ID = id;
         this.X = 0;
         this.Y = 0;
         this.rot = 0;
-        this.Name = "lol";
+        this.Name = name || "DefaultName";
         this.HeadX = 0;
         this.HeadY = 0;
         this.HeadZ = 0;
@@ -12,4 +12,4 @@ class Player {
     }
 }
 
-module.exports = {Player};
+module.exports = Player;
