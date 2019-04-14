@@ -31,14 +31,13 @@ async function register(db, req, res) {
             res.status(409);
             return res.send("Username already taken") ;
         }
+        else{
+            let hashedPassword = bcrypt.hashSync(password, saltRounds);
 
-        let hashedPassword = bcrypt.hashSync(password, saltRounds);
-
-        conn.query("INSERT INTO `users`.`users` (`username`, `password`, `nickname`, `email`, `reg_date`, `Courses`) VALUES (?,?,?,?, DEFAULT, '');", [username, hashedPassword, "RossBob", "RossBob@hellothere.com"]).then(() => {
-            return res.sendStatus(201);
-        })
-
-
+            conn.query("INSERT INTO `users`.`users` (`username`, `password`, `nickname`, `email`, `reg_date`, `Courses`) VALUES (?,?,?,?, DEFAULT, '');", [username, hashedPassword, "RossBob", "RossBob@hellothere.com"]).then(() => {
+                return res.sendStatus(201);
+            })
+        }
     } catch (err) {
         throw err;
     } finally {

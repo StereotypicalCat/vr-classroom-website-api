@@ -1,5 +1,3 @@
-const amountOfCoursesToSend = 10;
-
 function newCourseController(db) {
     function post(req, res) {
         newCourse(db, req, res).then(function (value) {
@@ -25,6 +23,13 @@ async function newCourse(db, req, res) {
     if ((courseName != null) && (courseType != null) && (courseDescription != null) && (courseTeachers != null)){
         try {
             conn = await db.getConnection();
+
+            let usernameTakenTest = await conn.query(`SELECT * FROM \`courses\`.\`courses\` WHERE courseName = "${courseName}";`);
+
+            if (usernameTakenTest.length !== 0){
+                res.status(409);
+                return res.send("Course name already in use") ;
+            }
 
             conn.query("INSERT INTO `courses`.`courses` (`courseName`, `courseType`, `courseDescription`, `teachers`, `students`, `reg_date`) VALUES (?,?,?,?, NULL, DEFAULT);", [courseName, courseType, courseDescription, courseTeachers]).then(() => {
                 return res.sendStatus(201);

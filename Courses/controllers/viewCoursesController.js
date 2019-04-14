@@ -13,8 +13,9 @@ function viewCoursesController(db) {
 
 async function viewCourses(db, req, res) {
 
-    // If the body contains a specific id, we want to view that course.
+    // If the body contains a specific id or name, we want to view that course.
     let id = req.body.id || null;
+    let courseNameToGet = req.body.courseNameToGet || null;
 
     // If the body contains some id to start at, we start sending them courses from that id.
     let idToStartAt = req.body.idToStartAt || 0;
@@ -24,7 +25,28 @@ async function viewCourses(db, req, res) {
         conn = await db.getConnection();
 
         // If the user is searching for a specific id
-        if (id != null) {
+
+        if (courseNameToGet != null){
+            let responseFromSql = await conn.query(`SELECT * FROM courses.courses WHERE courseName = "${courseNameToGet}";`);
+            // If the course is found.
+            if (responseFromSql.length === 1) {
+                res.status(200);
+                let response = JSON.stringify({
+                    courseName: responseFromSql[0]["courseName"],
+                    courseType: responseFromSql[0]["courseType"],
+                    courseDescription: responseFromSql[0]["courseDescription"],
+                    courseTeachers: responseFromSql[0]["teachers"],
+                });
+                return res.send(response);
+            }
+            // Else return not found
+            else {
+                res.status(404);
+                return res.send("course with that name not found");
+            }
+        }
+
+        else if (id != null) {
             let responseFromSql = await conn.query(`SELECT * FROM courses.courses WHERE courseId = ${id};`);
             // If the course is found.
             if (responseFromSql.length === 1) {
@@ -51,8 +73,6 @@ async function viewCourses(db, req, res) {
             if (responseFromSql.length > 0) {
                 let coursesToSendBack = [];
                 let counter = idToStartAt;
-                console.log(responseFromSql[counter] !== undefined);
-                console.log((counter < (idToStartAt + amountOfCoursesToSend)));
                 while ((counter < (idToStartAt + amountOfCoursesToSend)) && (responseFromSql[counter] !== undefined)) {
                     coursesToSendBack.push({
                         courseName: responseFromSql[counter]["courseName"] || null,
