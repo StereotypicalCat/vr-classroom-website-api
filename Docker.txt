@@ -1,1 +1,4 @@
 docker run --name accounts-mariadb -e MYSQL_ROOT_PASSWORD=AccountPSWD -e MYSQL_DATABASE=users -p 3310:3306 -d mariadb
+
+
+docker run --name courses-mariadb -e MYSQL_ROOT_PASSWORD=AccountPSWD -e MYSQL_DATABASE=courses -p 3311:3306 -d mariadb

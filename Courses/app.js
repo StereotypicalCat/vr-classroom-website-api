@@ -5,9 +5,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const db = mariadb.createPool({
-    //host: '84.238.80.9',
+    host: '84.238.80.9',
     //host: "127.0.0.1",
-    host: '192.168.99.100',
+    //host: '192.168.99.100',
     port: '3311',
     user: 'root',
     password: 'AccountPSWD', // change this at production.
@@ -21,7 +21,7 @@ async function initializeDatabase() {
     let conn;
     try {
         conn = await db.getConnection();
-        const rows = await conn.query(`CREATE TABLE courses ( 
+        await conn.query(`CREATE TABLE courses ( 
             courseId INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
             courseName VARCHAR(60) NOT NULL, 
             courseType VARCHAR(20) NOT NULL,
@@ -30,10 +30,6 @@ async function initializeDatabase() {
             students VARCHAR(300),
             reg_date TIMESTAMP
             ); `);
-        console.log("Number 3");
-        console.log(rows);
-
-
     } catch (err) {
         console.log(err);
     } finally {
@@ -52,7 +48,7 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use('/Courses', courseRouter);
+app.use('/courses', courseRouter);
 
 app.get('/', (req, res) => {
     res.send('Welcome to my Nodemon API!');

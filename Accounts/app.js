@@ -29,10 +29,6 @@ async function initializeDatabase() {
             reg_date TIMESTAMP,
             courses VARCHAR(100)
             ); `);
-        console.log("Number 3");
-        console.log(rows);
-
-
     } catch (err) {
         console.log(err);
     } finally {

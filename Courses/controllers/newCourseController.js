@@ -1,3 +1,8 @@
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 function newCourseController(db) {
     function post(req, res) {
         newCourse(db, req, res).then(function (value) {
@@ -22,6 +27,12 @@ async function newCourse(db, req, res) {
 
     if ((courseName != null) && (courseType != null) && (courseDescription != null) && (courseTeachers != null)){
         try {
+            let courseName = sanitize(courseName);
+            let courseType = sanitize(courseType);
+            let courseDescription = sanitize(courseDescription);
+            let courseTeachers = sanitize(courseTeachers);
+
+
             conn = await db.getConnection();
 
             let usernameTakenTest = await conn.query(`SELECT * FROM \`courses\`.\`courses\` WHERE courseName = "${courseName}";`);
@@ -50,6 +61,11 @@ async function newCourse(db, req, res) {
 
 }
 
+function sanitize(stringToSanitize){
+    stringToSanitize = stringToSanitize.replaceAll("'", `\\'`);
+    stringToSanitize = stringToSanitize.replaceAll(`"`, `\\"`);
+    return stringToSanitize;
+}
 
 
 module.exports = newCourseController;

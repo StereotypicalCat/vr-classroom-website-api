@@ -66,7 +66,7 @@
                     <form id="getCourseName" name="email-form" data-name="Email Form" class="w-clearfix">
                         <label for="courseName" class="forside-tekst">Navn på kursus</label>
                         <input type="text" class="text-field-2 w-input" maxlength="256" name="field" data-name="Field" placeholder="Mit seje kursus" id="courseName" required>
-                        <input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getCourseName()"></form>
+                        <input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getLocalNewCourseName()"></form>
                     <div class="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
                     </div>
@@ -88,7 +88,7 @@
                             <option value="Second">Fysik</option>
                             <option value="Third">Matematik</option>
                             <option value="Fourth">Geografi</option>
-                        </select><input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getCourseType()"></form>
+                        </select><input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getLocalNewCourseType()"></form>
                     <div class="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
                     </div>
@@ -105,7 +105,7 @@
                     <form id="getcourseDescription" name="email-form" data-name="Email Form" class="w-clearfix">
                         <label for="name" class="forside-tekst">Beskrivelse</label>
                         <textarea id="CourseDescription" name="field-7" placeholder="Hvad handler kurset om?" maxlength="5000" class="textarea w-input"></textarea>
-                        <input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getCourseDescription()"></form>
+                        <input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button" onclick="getLocalNewCourseDescription()"></form>
                     <div class="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
                     </div>
@@ -192,11 +192,11 @@
                       <div class="forside-tekst" id="courseTypeShow">This is some text inside of a div block.</div>
                         <label for="name" class="forside-tekst">Beskrivelse af Kursus</label>
                       <div class="forside-tekst" id="courseDescriptionShow">This is some text inside of a div block.</div>
-                        <input type="submit" value="Næste" data-wait="Please wait..." class="knap w-button"></form>
-                    <div class="w-form-done">
+                        <input type="submit" value="Opret det nye kursus" data-wait="Please wait..." class="knap w-button" onclick="newCourse()"></form>
+                    <div class="w-form-done" id="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
                     </div>
-                    <div class="w-form-fail">
+                    <div class="w-form-fail" id="w-form-fail">
                       <div>Oops! Something went wrong while submitting the form.</div>
                     </div>
                   </div>
