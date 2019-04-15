@@ -45,8 +45,6 @@ const getUserId = (username, password) => {
                 return -1;
             }
             console.log(`statusCode: ${res.statusCode}`);
-
-
             if (body != null) {
                 console.log(body);
                 console.log(body.userID);
