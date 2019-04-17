@@ -98,14 +98,24 @@ server.on('message',function(msg,info){
 
     if(stringReceivedFromClient.substring(0,6) === "logoff"){
         let id = stringReceivedFromClient.split('|')[1];
-        players.forEach(pla =>{
-            if(pla.id === id){
-                players.splice(id,1);
-            }
-        });
+        let playerRemoved = false;
 
-        //sending ok back to client
-        returnData = "ok";
+        for (let i = 0; i < players.length; i++){
+            if(players[i].ID == id){
+                players.splice(i, 1);
+                playerRemoved = true;
+            }
+        }
+
+        if (playerRemoved){
+            // send ok back to client
+            returnData = "ok";
+        }
+        else{
+            returnData = "Id not found";
+        }
+
+
     }
 
     // If the client requests to creat a new object
@@ -151,7 +161,7 @@ server.on('message',function(msg,info){
         // Add all people that are on the server to the string.
         returnData += "Per";
         players.forEach(player => {
-            returnData += `|${player.ID.toString()},x:${player.X.toString()},y:${player.Y.toString()},name:${player.Name},rot:${player.rot.toString()},headx:${player.HeadX.toString()},heady:${player.HeadY.toString()},headz:${player.HeadZ.toString()},headw:${player.HeadW.toString()}`;
+            returnData += `|${player.ID.toString()},x:${player.X.toString()},y:${player.Y.toString()},name:${player.Name},rot:${player.rot.toString()},headx:${player.HeadX.toString()},heady:${player.HeadY.toString()},headz:${player.HeadZ.toString()},headw:${player.HeadW.toString()},l_a_x:${player.l_a_x.toString()},l_a_y:${player.l_a_y.toString()},l_a_z:${player.l_a_z.toString()},r_a_x:${player.r_a_x.toString()},r_a_y:${player.r_a_y.toString()},r_a_z:${player.r_a_z.toString()}`;
             // Old: data += "|" + element.ID.toString() + ",x:" + element.X.toString() + ",y:" + element.Y.toString() + ",name:" + element.Name + ",rot:" + element.rot.toString() + ",headx:" + element.HeadX.toString() + ",heady:" + element.HeadY.toString() + ",headz:" + element.HeadZ.toString()+ ",headw:" + element.HeadW.toString();
         });
 
@@ -189,7 +199,6 @@ server.on('message',function(msg,info){
 
                     value = value.replace(",", ".");
                     switch (key) {
-
                         case "x":
                             player.X = parseFloat(value);
                             break;
@@ -210,6 +219,24 @@ server.on('message',function(msg,info){
                             break;
                         case "headw":
                             player.HeadW = parseFloat(value);
+                            break;
+                        case "l_a_x":
+                            player.l_a_x = parseFloat(value);
+                            break;
+                        case "l_a_y":
+                            player.l_a_y = parseFloat(value);
+                            break;
+                        case "l_a_z":
+                            player.l_a_z = parseFloat(value);
+                            break;
+                        case "r_a_x":
+                            player.r_a_x = parseFloat(value);
+                            break;
+                        case "r_a_y":
+                            player.r_a_y = parseFloat(value);
+                            break;
+                        case "r_a_z":
+                            player.r_a_z = parseFloat(value);
                             break;
                     }
                 }
