@@ -52,8 +52,8 @@
 
 .slide {
   background-color: rgba(0, 0, 0, .36);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .36)), to(rgba(0, 0, 0, .36))), url('../images/vr_izusek_istock_thumb800.jpg');
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .36), rgba(0, 0, 0, .36)), url('../images/vr_izusek_istock_thumb800.jpg');
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .36)), to(rgba(0, 0, 0, .36))), url('../images/headerImage.jpg');
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .36), rgba(0, 0, 0, .36)), url('../images/headerImage.jpg');
   background-position: 0px 0px, 50% 0%;
   background-size: auto, cover;
   background-repeat: repeat, no-repeat;
@@ -723,8 +723,8 @@
 
 .body-3 {
   background-color: #fff;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .39)), to(rgba(0, 0, 0, .39))), url('../images/s3-news-tmp-61194-mashbo_-_sibro_-_vr_classroom--default--1280.jpg');
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .39), rgba(0, 0, 0, .39)), url('../images/s3-news-tmp-61194-mashbo_-_sibro_-_vr_classroom--default--1280.jpg');
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .39)), to(rgba(0, 0, 0, .39))), url('../images/newCourseImage.png');
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .39), rgba(0, 0, 0, .39)), url('../images/newCourseImage.png');
   background-position: 0px 0px, 0px 0px;
   background-size: auto, cover;
   font-size: 12px;
@@ -1112,8 +1112,8 @@
 .section-10 {
   height: 1000px;
   background-color: #000;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .43)), to(rgba(0, 0, 0, .43))), url('../images/5-ways-augmented-reality-and-virtual-reality-transform-the-industry-of-education.jpg');
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .43), rgba(0, 0, 0, .43)), url('../images/5-ways-augmented-reality-and-virtual-reality-transform-the-industry-of-education.jpg');
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .43)), to(rgba(0, 0, 0, .43))), url('../images/myCoursesImage.png');
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .43), rgba(0, 0, 0, .43)), url('../images/myCoursesImage.png');
   background-position: 0px 0px, 0px 0px;
   background-size: auto, cover;
 }
@@ -1136,7 +1136,7 @@
 
 .section-11 {
   height: 1000px;
-  background-image: url('../images/virtual-reality-in-education-how-vr-can-transform-the-classroom-learning-1024x574.jpg');
+  background-image: url('../images/findCoursesImage.jpg');
   background-position: 0px 0px;
   background-size: cover;
 }

@@ -47,13 +47,14 @@ function loginUser() {
 
     let myRequest = new XMLHttpRequest();
 
-    //myRequest.open('POST', 'https://loginservice.lucaswinther.info/login/login', true);
+    myRequest.open('POST', 'https://loginservice.lucaswinther.info/login/login', true);
     myRequest.responseType = 'json';
     myRequest.setRequestHeader("Content-Type", "application/json");
 
     myRequest.onload = () => {
         console.log(myRequest.response);
         if (myRequest.status == 200) {
+            createCookie("username", username, 100000);
             document.querySelector('#w-form-done-login').style = "display:block";
             document.querySelector('#w-form-fail-login').style = "display:none";
         } else {
@@ -142,7 +143,7 @@ function getLocalNewCourseInfo() {
 function newCourse(){
     let currentCourseObject = JSON.parse(getCookie("currentCourse"));
 
-    currentCourseObject.courseTeachers = "Lucas Winther";
+    currentCourseObject.courseTeachers = getCookie("username");
 
     console.log("testing to create a new course");
     console.log(currentCourseObject);
@@ -210,7 +211,13 @@ function getCourseByNameOrId() {
                 document.querySelector('#w-form-fail').style = "display:none";
 
                 let child = document.querySelector('#courseDisplayDiv');
-                child.parentNode.removeChild(child);
+                let parent = child.parentNode;
+                parent.removeChild(child);
+
+                let newChild = document.createElement("DIV");
+                newChild.id = "courseDisplayDiv";
+
+                parent.appendChild(newChild);
 
                 // if there is only 1 object returned
                 if(!(myRequest.response instanceof Array)){
@@ -250,6 +257,8 @@ function getCourseByNameOrId() {
                         document.querySelector('#courseDisplayDiv').appendChild(HTMLcourseType);
                         document.querySelector('#courseDisplayDiv').appendChild(HTMLcourseDescription);
                         document.querySelector('#courseDisplayDiv').appendChild(HTMLcourseTeacher);
+
+                        document.querySelector('#courseDisplayDiv').appendChild(document.createElement("hr"));
 
 
                     })
