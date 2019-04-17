@@ -14,7 +14,7 @@ const db = mariadb.createPool({
     database: 'users',
     connectionLimit: 8
 });
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const loginRouter = require('./routes/loginRouter')(db);
 
 async function initializeDatabase() {
@@ -50,11 +50,7 @@ app.use(function(req, res, next){
 
 app.use(cookieParser());
 
-app.use('/login', loginRouter);
-
-app.get('/', (req, res) => {
-    res.send('Welcome to my Nodemon API!');
-});
+app.use('/', loginRouter);
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`);

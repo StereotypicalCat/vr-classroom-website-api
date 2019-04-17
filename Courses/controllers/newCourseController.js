@@ -1,8 +1,3 @@
-String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-};
-
 function newCourseController(db) {
     function post(req, res) {
         newCourse(db, req, res).then(function (value) {
@@ -10,16 +5,13 @@ function newCourseController(db) {
             }
         );
     }
-
     return {post};
 }
 
 async function newCourse(db, req, res) {
 
-
     let conn;
-
-    // Get all the required variables.
+    // Get all the required variables from the request body.
     let courseName = req.body.courseName;
     let courseType = req.body.courseType;
     let courseDescription = req.body.courseDescription;
@@ -27,10 +19,10 @@ async function newCourse(db, req, res) {
 
     if ((courseName != null) && (courseType != null) && (courseDescription != null) && (courseTeachers != null)){
         try {
-            let courseName = sanitize(courseName);
-            let courseType = sanitize(courseType);
-            let courseDescription = sanitize(courseDescription);
-            let courseTeachers = sanitize(courseTeachers);
+            courseName = sanitize(courseName);
+            courseType = sanitize(courseType);
+            courseDescription = sanitize(courseDescription);
+            courseTeachers = sanitize(courseTeachers);
 
 
             conn = await db.getConnection();

@@ -14,7 +14,7 @@ const db = mariadb.createPool({
     database: 'courses',
     connectionLimit: 8
 });
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 const courseRouter = require('./routes/courseRouter')(db);
 
 async function initializeDatabase() {
@@ -32,6 +32,7 @@ async function initializeDatabase() {
             ); `);
     } catch (err) {
         console.log(err);
+        console.log("Assuming database is already setup");
     } finally {
         if (conn) conn.end();
     }
@@ -41,18 +42,8 @@ initializeDatabase();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(function(req, res, next){
-    res.setHeader('Content-Type', 'application/json');
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
 
-app.use('/courses', courseRouter);
-
-app.get('/', (req, res) => {
-    res.send('Welcome to my Nodemon API!');
-});
+app.use('/', courseRouter);
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`);
