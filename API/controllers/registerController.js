@@ -18,7 +18,7 @@ function registerController(db) {
 
         // Make the request
         // Make the request
-        request.post(url = 'http://127.0.0.1:3001/register', {
+        request.post(url = 'https://vr-classroom-accounts.lucaswinther.info/register', {
             json: {
                 "username": username,
                 "password": password,

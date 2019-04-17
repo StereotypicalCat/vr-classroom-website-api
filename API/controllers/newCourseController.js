@@ -15,7 +15,7 @@ function createNewCourse(req, res){
     req.body.sessionId = req.body.sessionId || req.cookies.sessionId || null;
     req.body.username = req.body.username || req.cookies.username || null;
 
-    request('http://127.0.0.1:3000/accounts/login',
+    request('https://vr-classroom-api.lucaswinther.info/accounts/login',
         {json: req.body, headers: JSON.stringify(req.headers), method: "POST"}, (error, responseFromRequest, body) => {
         console.log("Authenticating User...");
         if (error) {
@@ -37,7 +37,7 @@ function createNewCourse(req, res){
                 let courseTeachers = sanitize(req.body.courseTeachers);
 
                 // send it off!
-                request.post('http://127.0.0.1:3002/new', {
+                request.post('http://vr-classroom-courses.lucaswinther.info/new', {
                     json: {
                         "courseName":courseName,
                         "courseType":courseType,

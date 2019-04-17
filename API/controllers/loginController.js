@@ -25,7 +25,7 @@ function logonController() {
             password = sanitize(password);
 
             // Make the request
-            request.post(url = 'http://127.0.0.1:3001/login', {
+            request.post(url = 'https://vr-classroom-accounts.lucaswinther.info/login', {
                 json: {
                     "username": username,
                     "password": password,

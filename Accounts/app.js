@@ -5,9 +5,9 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 const db = mariadb.createPool({
-    //host: '84.238.80.9',
+    host: '84.238.80.9',
     //host: "127.0.0.1",
-    host: '192.168.99.100',
+    //host: '192.168.99.100',
     port: '3310',
     user: 'root',
     password: 'AccountPSWD', // change this at production.
