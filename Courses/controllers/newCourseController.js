@@ -19,12 +19,6 @@ async function newCourse(db, req, res) {
 
     if ((courseName != null) && (courseType != null) && (courseDescription != null) && (courseTeachers != null)){
         try {
-            courseName = sanitize(courseName);
-            courseType = sanitize(courseType);
-            courseDescription = sanitize(courseDescription);
-            courseTeachers = sanitize(courseTeachers);
-
-
             conn = await db.getConnection();
 
             let usernameTakenTest = await conn.query(`SELECT * FROM \`courses\`.\`courses\` WHERE courseName = "${courseName}";`);
@@ -51,12 +45,6 @@ async function newCourse(db, req, res) {
         return res.send("name, type, description or teachers were null");
     }
 
-}
-
-function sanitize(stringToSanitize){
-    stringToSanitize = stringToSanitize.replaceAll("'", `\\'`);
-    stringToSanitize = stringToSanitize.replaceAll(`"`, `\\"`);
-    return stringToSanitize;
 }
 
 

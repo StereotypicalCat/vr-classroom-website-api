@@ -4,9 +4,9 @@ const request = require('request');
 
 function logonController() {
     function post(req, res) {
-        let username = req.body.username;
+        let username = req.body.username || req.cookies.username || null;
         let password = req.body.password;
-        let userSessionCookie = req.cookies.sessionId;
+        let userSessionCookie = req.cookies.sessionId || req.body.sessionId;
 
         // If the username isn't supplied in the request.
         if (typeof (username) !== "string") {
@@ -21,6 +21,7 @@ function logonController() {
         else {
             // sanitize user input
             username = sanitize(username);
+            console.log(password);
             password = sanitize(password);
 
             // Make the request
